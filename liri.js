@@ -74,22 +74,27 @@ function spotifyThis() {
   }
   var Spotify = require("node-spotify-api");
   var spotify = new Spotify(keys.spotify);
-  spotify.search({ type: "track", query: liriInput, limit: "5" }, function(
+  var limitNum = 10;
+  spotify.search({ type: "track", query: liriInput, limit: limitNum }, function(
     err,
     data
   ) {
     if (err) {
       return console.log("Error occurred: " + err);
+    } else {
+      console.log(
+        "\nHey. Covers, remixes, and mash-ups are popular and awesome. So here are the top ten Spotify search results:"
+      );
+      for (i = 0; i < limitNum; i++) {
+        console.log("\nSearch Result #" + (i + 1));
+        console.log("Song Title: " + data.tracks.items[i].name);
+        console.log("Artist: " + data.tracks.items[i].artists[0].name);
+        console.log(
+          "Spotify Preview Link: " + data.tracks.items[i].preview_url
+        );
+        console.log("Album: " + data.tracks.items[i].album.name);
+      }
     }
-    //console.log(data);
-    console.log(data.tracks.limit);
-    console.log(data.tracks.items[0]); //This is fucking complicated.
-    //we're going to need to figure out how to manipulate the data.
-    //artist
-    //the song's name
-    //a preview link of song from Spotify
-    //the albumn the song is from
-    //console.log(JSON.stringify(data, null, 2));
   });
 }
 
