@@ -59,10 +59,9 @@ function myTweets() {
       var tweetArr = JSON.parse(response.body);
 
       for (i = 0; i < 20; i++) {
-        console.log("Tweet " + (i + 1) + ".");
+        console.log("\nTweet " + (i + 1) + ".");
         console.log(tweetArr[i].text);
         console.log(tweetArr[i].created_at);
-        console.log("");
       }
     }
   });
