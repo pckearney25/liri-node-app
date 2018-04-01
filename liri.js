@@ -108,7 +108,7 @@ function movieThis() {
 
   request(queryUrl, function(error, response, body) {
     if (!error && response.statusCode === 200) {
-      console.log("Title: " + JSON.parse(body).Title);
+      console.log("\nTitle: " + JSON.parse(body).Title);
       console.log("Release Year: " + JSON.parse(body).Year);
       console.log("IMDB Rating: " + JSON.parse(body).imdbRating);
       console.log("Rotten Tomatoes: " + JSON.parse(body).Ratings[1].Value);
@@ -121,5 +121,47 @@ function movieThis() {
 }
 
 function doIt() {
-  console.log(liriAction);
+  var fs = require("fs");
+  fs.readFile("random.txt", "utf8", function(error, data) {
+    if (error) {
+      return console.log(error);
+    }
+
+    var dataArr = data.split(",");
+    liriAction = dataArr[0]; //if defined.
+    liriInput = dataArr[1]; //if defined
+
+    runSwitch2();
+  });
+}
+
+function runSwitch2() {
+  if (
+    liriAction === "my-tweets" ||
+    liriAction === "spotify-this-song" ||
+    liriAction === "movie-this" ||
+    liriAction === "do-what-it-says"
+  ) {
+    switch (liriAction) {
+      case "my-tweets":
+        myTweets();
+        break;
+
+      case "spotify-this-song":
+        spotifyThis();
+        break;
+
+      case "movie-this":
+        movieThis();
+        break;
+
+      case "do-what-it-says":
+        console.log(
+          "Recursive function! Been there. Done that. Not doing it again!"
+        );
+        break;
+    }
+  } else {
+    console.log("Check data in random.txt file and try again.");
+  }
 }
